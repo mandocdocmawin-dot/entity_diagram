@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 #[Fillable(['customer_id', 'order_date'])]
 #[Hidden(['created_at', 'updated_at'])]
 class Order extends Model
 {
+    use HasFactory;
     // Pabalik sa Customer na umorder
     public function customer(): BelongsTo
     {

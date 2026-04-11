@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 #[Fillable(['name', 'email'])]
 #[Hidden(['created_at', 'updated_at'])]
 class Customer extends Model
 {
+    use HasFactory;
 
     // One-to-One relationship sa Customer_Profile
     public function profile(): HasOne
