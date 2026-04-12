@@ -30,5 +30,43 @@ class User extends Authenticatable
         ];
     }
 
-    
+    /**
+     * The "booted" method of the model.
+     * Dito natin ilalagay yung automatic deletion.
+     */
+
+    protected static function booted()
+    {
+        static::deleting(function ($user) {
+            if ($user->customer) {
+                
+                // 1. I-delete ang lahat ng orders ng customer na ito
+                $user->customer->orders()->delete();
+                
+                // 2. I-delete ang profile ng customer 
+                if ($user->customer->profile) {
+                    $user->customer->profile()->delete();
+                }
+                
+                // 3. Panghuli, i-delete ang customer record mismo
+                $user->customer()->delete();
+            }
+        });
+    }
+
+    /**
+     * Relationship: Isang User ay pwedeng magkaroon ng maraming Orders
+     */
+    public function orders()
+    {
+        return $this->hasManyThrough(Order::class, Customer::class);
+    }
+
+    /**
+     * Relationship: Isang User ay may isang Customer ID / Profile
+     */
+    public function customer()
+    {
+        return $this->hasOne(Customer::class, 'email', 'email');
+    }    
 }

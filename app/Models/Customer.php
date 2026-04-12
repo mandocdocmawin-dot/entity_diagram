@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-#[Fillable(['name', 'email'])]
+#[Fillable(['uuid', 'customer_id', 'name', 'email'])]
 #[Hidden(['created_at', 'updated_at'])]
 class Customer extends Model
 {
