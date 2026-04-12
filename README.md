@@ -187,3 +187,22 @@ public function up()
 ```
 
 ---
+
+## Latest Activity: Middleware + CRUD Integration
+
+### CRUD & UI Implementation
+- Implemented full CRUD (Create, Read, Update, Delete) operations for Customers, Products, and Orders.
+- Built Blade views for all entity management interfaces, providing intuitive UI for data entry and manipulation.
+
+### Database Optimization
+- Leveraged Eloquent relationships instead of manual SQL joins for improved code maintainability.
+- Implemented eager loading when displaying related data to minimize N+1 query problems and optimize performance.
+
+### Access Control & Middleware
+- **Authentication:** Configured middleware to ensure only authenticated users can access their specific entities.
+- **Admin Restrictions:** Restricted User Management so that only Admin users can manage the users list.
+- **User Isolation:** Ensured regular users can only view and manage their own accounts and orders.
+
+### Dynamic UI Behavior
+- Implemented conditional UI rendering that hides restricted actions (edit and delete buttons) based on user role.
+- Admin users see full action menus; regular users only see actions permitted for their role.
