@@ -69,7 +69,12 @@
     
                     <hr>
                     <div class="d-flex justify-content-between mt-4">
-                        <a href="{{ route('users.index') }}" class="btn btn-secondary">Back to Users List</a>
+                        @if(auth()->user()->role === 'admin')
+                            <a href="{{ route('users.index') }}" class="btn btn-secondary">Back to Users List</a>
+                        @endif
+                        @if(auth()->user()->id === $user->id)
+                            <a href="{{ route('home', $user->id) }}" class="btn btn-secondary">Back to Dashboard</a>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -28,7 +28,7 @@
                             <th>Customer Name</th>
                         @endif
                         @if(auth()->user()->role === 'user')
-                            <th>Order Name</th>
+                            <th>Name</th>
                         @endif
                         <th>Order Date</th>
                         <th class="text-center">Actions</th>
