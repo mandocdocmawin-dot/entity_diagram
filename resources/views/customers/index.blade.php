@@ -6,7 +6,9 @@
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>List of Customers</h2>
-        <a href="{{ route('customers.create') }}" class="btn btn-primary">Add New Customer</a>
+        @if(auth()->user()->role === 'admin')
+            <a href="{{ route('customers.create') }}" class="btn btn-primary">Add New Customer</a>
+        @endif
     </div>
 
     @if(session('success'))
@@ -39,13 +41,17 @@
                             </td> 
 
                             <td class="text-center">
-                                <a href="{{ route('customers.show', $customer->id) }}" class="btn btn-sm btn-info text-white">View</a>  
+                                <a href="{{ route('customers.show', $customer->id) }}" class="btn btn-sm btn-info text-white">View</a>
                                 
-                                <form action="{{ route('customers.destroy', $customer->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this customer?')">Delete</button>
-                                </form>
+                                @if(auth()->user()->role === 'admin')
+                                    <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-sm btn-warning text-dark">Edit</a>
+                                    
+                                    <form action="{{ route('customers.destroy', $customer->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this customer?')">Delete</button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

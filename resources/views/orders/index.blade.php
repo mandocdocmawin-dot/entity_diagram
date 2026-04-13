@@ -24,7 +24,12 @@
             <table class="table table-hover table-bordered mb-0">
                 <thead class="table-dark">
                     <tr>
-                        <th>Customer Name</th>
+                        @if(auth()->user()->role === 'admin')
+                            <th>Customer Name</th>
+                        @endif
+                        @if(auth()->user()->role === 'user')
+                            <th>Order Name</th>
+                        @endif
                         <th>Order Date</th>
                         <th class="text-center">Actions</th>
                     </tr>

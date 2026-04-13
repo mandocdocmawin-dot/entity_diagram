@@ -19,12 +19,18 @@ class CustomerController extends Controller
     // 2. CREATE (Form): Ipakita ang form para makapag-add ng bagong customer
     public function create()
     {
+        if (auth()->user()->role !== 'admin') {
+            abort(403, 'Unauthorized access. Admin privilege is required.');
+        }
         return view('customers.create');
     }
 
     // 3. CREATE (Save): I-save sa database ang sinubmit sa form
     public function store(Request $request)
     {
+        if (auth()->user()->role !== 'admin') {
+            abort(403, 'Unauthorized access. Admin privilege is required.');
+        }
         // I-validate ang input ng user
         $request->validate([
             'name' => 'required|string|max:255',
@@ -54,12 +60,18 @@ class CustomerController extends Controller
     // 5. UPDATE (Form): Ipakita ang form para ma-edit ang customer
     public function edit(Customer $customer)
     {
+        if (auth()->user()->role !== 'admin') {
+            abort(403, 'Unauthorized access. Admin privilege is required.');
+        }
         return view('customers.edit', compact('customer'));
     }
 
     // 6. UPDATE (Save): I-save ang mga pagbabago sa database
     public function update(Request $request, Customer $customer)
     {
+        if (auth()->user()->role !== 'admin') {
+            abort(403, 'Unauthorized access. Admin privilege is required.');
+        }
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:customers,email,' . $customer->id, // Ignore ang sariling email sa validation
@@ -70,6 +82,9 @@ class CustomerController extends Controller
             'email' => $request->email,
         ]);
 
+        if (auth()->user()->role !== 'admin') {
+            abort(403, 'Unauthorized access. Admin privilege is required.');
+        }
         return redirect()->route('customers.index')->with('success', 'Customer updated successfully!');
     }
 

@@ -6,6 +6,7 @@
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>List of Users</h2>
+        <a href="{{ route('users.create') }}" class="btn btn-primary">Create New User</a>
     </div>
 
     @if(session('success'))
@@ -44,6 +45,8 @@
                                 <a href="{{ route('users.profile', $user->id) }}" class="btn btn-sm btn-info text-white">View Profile</a>
 
                                 @if(auth()->user()->role === 'admin' && auth()->user()->id !== $user->id)
+                                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-warning text-dark">Edit</a>
+                                    
                                     <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')

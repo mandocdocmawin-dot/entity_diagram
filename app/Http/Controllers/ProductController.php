@@ -17,12 +17,18 @@ class ProductController extends Controller
     // 2. CREATE: Form para sa bagong Product
     public function create()
     {
+        if (auth()->user()->role !== 'admin') {
+            abort(403, 'Unauthorized access. Admin privilege is required.');
+        }
         return view('products.create');
     }
 
     // 3. STORE: I-save ang Product
     public function store(Request $request)
     {
+        if (auth()->user()->role !== 'admin') {
+            abort(403, 'Unauthorized access. Admin privilege is required.');
+        }
         $request->validate([
             'product_name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
@@ -42,12 +48,18 @@ class ProductController extends Controller
     // 5. EDIT: Form para i-edit ang Product
     public function edit(Product $product)
     {
+        if (auth()->user()->role !== 'admin') {
+            abort(403, 'Unauthorized access. Admin privilege is required.');
+        }
         return view('products.edit', compact('product'));
     }
 
     // 6. UPDATE: I-save ang changes
     public function update(Request $request, Product $product)
     {
+        if (auth()->user()->role !== 'admin') {
+            abort(403, 'Unauthorized access. Admin privilege is required.');
+        }
         $request->validate([
             'product_name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
@@ -55,6 +67,9 @@ class ProductController extends Controller
 
         $product->update($request->all());
 
+        if (auth()->user()->role !== 'admin') {
+            abort(403, 'Unauthorized access. Admin privilege is required.');
+        }
         return redirect()->route('products.index')->with('success', 'Product updated successfully!');
     }
 
