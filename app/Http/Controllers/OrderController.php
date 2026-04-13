@@ -44,6 +44,10 @@ class OrderController extends Controller
 
         $customer = Customer::where('email', auth()->user()->email)->first();
 
+        if (!$customer) {
+            return redirect()->back()->withErrors(['error' => 'No customer profile found for this account. Please update your profile first.']);
+        }
+        
         // 1. I-save muna ang Order
         $order = Order::create([
             'customer_id' => $customer->id,

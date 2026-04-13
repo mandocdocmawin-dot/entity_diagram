@@ -37,12 +37,21 @@ class UserController extends Controller
             'role' => 'required|in:user,admin',
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'role' => $request->role,
         ]);
+
+        $customerData = [
+            'uuid'  => \Illuminate\Support\Str::uuid(),
+            'customer_id' => 'CUST-' . strtoupper(\Illuminate\Support\Str::random(4)),
+            'name' => $request->name,
+            'email' => $request->email,
+        ];
+        
+        $user->customer()->create($customerData);
 
         return redirect()->route('users.index')->with('success', 'User created successfully!');
     }

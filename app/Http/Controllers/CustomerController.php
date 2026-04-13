@@ -85,7 +85,7 @@ class CustomerController extends Controller
         if (auth()->user()->role !== 'admin') {
             abort(403, 'Unauthorized access. Admin privilege is required.');
         }
-        return redirect()->route('customers.index')->with('success', 'Customer updated successfully!');
+        return redirect()->route('customers.show', $customer)->with('success', 'Customer updated successfully!');
     }
 
     // 7. DELETE: Burahin ang customer sa database
